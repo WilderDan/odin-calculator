@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+
+.calculator {
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+  max-width: 300px;
+}
+
+.display {
+  text-align: right;
+  background-color: lightgray;
+  padding: 8px;
+}
+
+.btnRow {
+  display: flex;
+}
+
+.operation {
+  flex-basis: 25%;
+}
+.clear {
+  flex-basis: 75%;
+}
+
+.digit {
+  flex-basis: 25%;
+}
+
+.zero {
+  flex-basis: 75%;
+}
