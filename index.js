@@ -1,3 +1,9 @@
+let firstOperand, secondOperand, operation;
+
+function operate(operation, a, b) {
+  return operation(a, b);
+}
+
 function add(a, b) {
   return a + b;
 }
