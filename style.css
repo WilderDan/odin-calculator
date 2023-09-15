@@ -48,7 +48,8 @@ button:hover {
 
 #display {
   text-align: right;
-  background-color: white;
+  background-color: lightslategray;
+  color: white;
   padding: 8px;
   flex: 1;
   font-size: x-large;
