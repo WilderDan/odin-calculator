@@ -5,12 +5,12 @@
   let shouldDigitAppend = false;
 
   const display = (() => {
-    let onDisplay = "0";
+    let displayStr = "0";
 
     return (value = "0", shouldAppend = false) => {
-      onDisplay = shouldAppend ? onDisplay + value : value;
-      document.getElementById("display").innerText = onDisplay;
-      return onDisplay;
+      displayStr = shouldAppend ? displayStr + value : value;
+      document.getElementById("display").innerText = displayStr;
+      return displayStr;
     };
   })();
 
@@ -49,8 +49,13 @@
           return null;
       }
     }
+
+    // Handle previous
+    if (firstOperand !== null) calculate();
+
     operation = getOperationFromString(e.target.id);
     firstOperand = currentNumber;
+
     shouldDigitAppend = false;
   }
 
@@ -65,6 +70,10 @@
   }
 
   function handleEqualClick() {
+    calculate();
+  }
+
+  function calculate() {
     secondOperand = currentNumber;
     let solution = operate(operation, firstOperand, secondOperand);
     if (solution !== null) currentNumber = display(solution);
