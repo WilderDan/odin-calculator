@@ -1,47 +1,101 @@
-let firstOperand, secondOperand, operation;
-let display = "0";
+(function calculator() {
+  let firstOperand = null;
+  let secondOperand = null;
+  let operation = null;
+  let shouldDigitAppend = false;
 
-init();
+  const display = (() => {
+    let onDisplay = "0";
 
-function init() {
-  Array.from(document.getElementsByClassName("digit")).forEach((digitBtn) =>
-    digitBtn.addEventListener("click", handleDigitClick)
-  );
+    return (value = "0", shouldAppend = false) => {
+      onDisplay = shouldAppend ? onDisplay + value : value;
+      document.getElementById("display").innerText = onDisplay;
+      return onDisplay;
+    };
+  })();
 
-  document.getElementById("clear").addEventListener("click", handleClearClick);
-}
+  let currentNumber = +display();
 
-function handleDigitClick(e) {
-  let digit = e.target.innerText;
-  // string concat
-  updateDisplay(display === "0" ? digit : display + digit);
-}
+  (function setUpEventHandlers() {
+    Array.from(document.getElementsByClassName("digit")).forEach((digitBtn) =>
+      digitBtn.addEventListener("click", handleDigitClick)
+    );
 
-function handleClearClick(e) {
-  updateDisplay(0);
-}
+    Array.from(document.getElementsByClassName("operation")).forEach(
+      (operationBtn) => operationBtn.addEventListener("click", handleOperation)
+    );
 
-function updateDisplay(value) {
-  display = value.toString();
-  document.getElementById("display").innerText = display;
-}
+    document
+      .getElementById("clear")
+      .addEventListener("click", handleClearClick);
 
-function operate(operation, a, b) {
-  return operation(a, b);
-}
+    document
+      .getElementById("equal")
+      .addEventListener("click", handleEqualClick);
+  })();
 
-function add(a, b) {
-  return a + b;
-}
+  function handleOperation(e) {
+    function getOperationFromString(str) {
+      switch (str) {
+        case "add":
+          return add;
+        case "subtract":
+          return subtract;
+        case "multiply":
+          return multiply;
+        case "divide":
+          return divide;
+        default:
+          return null;
+      }
+    }
+    operation = getOperationFromString(e.target.id);
+    firstOperand = currentNumber;
+    shouldDigitAppend = false;
+  }
 
-function subtract(a, b) {
-  return a - b;
-}
+  function handleDigitClick(e) {
+    currentNumber = +display(e.target.innerText, shouldDigitAppend);
+    shouldDigitAppend = true;
+  }
 
-function multiply(a, b) {
-  return a * b;
-}
+  function handleClearClick(e) {
+    resetOperation();
+    currentNumber = +display();
+  }
 
-function divide(a, b) {
-  return a / b;
-}
+  function handleEqualClick() {
+    secondOperand = currentNumber;
+    let solution = operate(operation, firstOperand, secondOperand);
+    if (solution !== null) currentNumber = display(solution);
+    resetOperation();
+  }
+
+  function resetOperation() {
+    firstOperand = null;
+    secondOperand = null;
+    operation = null;
+    shouldDigitAppend = false;
+  }
+
+  function operate(operation, a, b) {
+    if (operation === null || a === null || b === null) return null;
+    return operation(a, b);
+  }
+
+  function add(a, b) {
+    return a + b;
+  }
+
+  function subtract(a, b) {
+    return a - b;
+  }
+
+  function multiply(a, b) {
+    return a * b;
+  }
+
+  function divide(a, b) {
+    return a / b;
+  }
+})();
