@@ -107,8 +107,10 @@
       }
     }
 
-    if (firstOperand === null) firstOperand = currentNumber;
-    else {
+    if (firstOperand === null) {
+      firstOperand = currentNumber;
+      currentNumber = null;
+    } else {
       secondOperand = currentNumber;
       calculate();
     }
