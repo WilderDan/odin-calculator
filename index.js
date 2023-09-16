@@ -36,6 +36,8 @@
     return (value = "0", shouldAppend = false) => {
       if (value === "backspace") {
         deleteCharacter();
+      } else if (displayStr === "0" && shouldAppend) {
+        displayStr = value;
       } else {
         let baseStr = shouldAppend ? displayStr + value : value.toString();
         displayStr = handleDecimalAppend(baseStr, MAX_CHARACTERS).slice(
