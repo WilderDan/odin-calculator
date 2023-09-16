@@ -24,12 +24,25 @@
       return str;
     }
 
+    function deleteCharacter() {
+      let length = displayStr.length;
+      displayStr = displayStr.slice(0, length - 1);
+      if (displayStr.length === 0) {
+        displayStr = "0";
+        shouldDigitAppend = false;
+      }
+    }
+
     return (value = "0", shouldAppend = false) => {
-      let baseStr = shouldAppend ? displayStr + value : value.toString();
-      displayStr = handleDecimalAppend(baseStr, MAX_CHARACTERS).slice(
-        0,
-        MAX_CHARACTERS
-      );
+      if (value === "backspace") {
+        deleteCharacter();
+      } else {
+        let baseStr = shouldAppend ? displayStr + value : value.toString();
+        displayStr = handleDecimalAppend(baseStr, MAX_CHARACTERS).slice(
+          0,
+          MAX_CHARACTERS
+        );
+      }
 
       document.getElementById("display").innerText = displayStr;
       return displayStr;
@@ -61,8 +74,17 @@
   function handleKeyDown(e) {
     let key = e.key === "Enter" ? "=" : e.key;
 
-    let button = document.querySelector(`button[data-key="${key}"]`);
-    if (button) button.click();
+    if (key === "Backspace") {
+      handleBackspace();
+    } else {
+      let button = document.querySelector(`button[data-key="${key}"]`);
+      if (button) button.click();
+    }
+  }
+
+  function handleBackspace() {
+    if (currentNumber !== null)
+      currentNumber = +display("backspace", shouldDigitAppend);
   }
 
   function handleOperation(e) {
