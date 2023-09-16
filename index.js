@@ -57,6 +57,7 @@
       }
     }
 
+    debugger;
     if (firstOperand === null) firstOperand = currentNumber;
     else {
       secondOperand = currentNumber;
@@ -91,7 +92,8 @@
   }
 
   function calculate() {
-    let solution = round(operate(operation, firstOperand, secondOperand), 8);
+    let solution = operate(operation, firstOperand, secondOperand);
+    if (solution !== null) solution = round(solution, 8);
 
     if (solution !== null) {
       display(solution);
