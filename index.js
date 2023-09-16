@@ -36,7 +36,7 @@
     return (value = "0", shouldAppend = false) => {
       if (value === "backspace") {
         deleteCharacter();
-      } else if (displayStr === "0" && shouldAppend) {
+      } else if (displayStr === "0" && shouldAppend && value !== ".") {
         displayStr = value;
       } else {
         let baseStr = shouldAppend ? displayStr + value : value.toString();
