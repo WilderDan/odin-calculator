@@ -50,12 +50,14 @@
       }
     }
 
-    // Handle previous
-    if (firstOperand !== null) calculate();
+    if (firstOperand === null) firstOperand = currentNumber;
+    else {
+      secondOperand = currentNumber;
+      calculate();
+    }
 
+    // Needs to be set after to handle operation chaining
     operation = getOperationFromString(e.target.id);
-    firstOperand = currentNumber;
-
     shouldDigitAppend = false;
   }
 
@@ -65,26 +67,28 @@
   }
 
   function handleClearClick(e) {
-    resetOperation();
-    currentNumber = +display();
-  }
-
-  function handleEqualClick() {
-    calculate();
-  }
-
-  function calculate() {
-    secondOperand = currentNumber;
-    let solution = operate(operation, firstOperand, secondOperand);
-    if (solution !== null) currentNumber = display(solution);
-    resetOperation();
-  }
-
-  function resetOperation() {
     firstOperand = null;
     secondOperand = null;
     operation = null;
     shouldDigitAppend = false;
+    currentNumber = +display();
+  }
+
+  function handleEqualClick() {
+    secondOperand = currentNumber;
+    calculate();
+  }
+
+  function calculate() {
+    let solution = operate(operation, firstOperand, secondOperand);
+
+    if (solution !== null) {
+      display(solution);
+      currentNumber = null;
+      firstOperand = solution;
+      secondOperand = null;
+      shouldDigitAppend = false;
+    }
   }
 
   function operate(operation, a, b) {
