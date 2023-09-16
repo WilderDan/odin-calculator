@@ -86,8 +86,12 @@
     calculate();
   }
 
+  function round(value, decimals) {
+    return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
+  }
+
   function calculate() {
-    let solution = operate(operation, firstOperand, secondOperand);
+    let solution = round(operate(operation, firstOperand, secondOperand), 8);
 
     if (solution !== null) {
       display(solution);
