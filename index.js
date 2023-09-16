@@ -86,6 +86,8 @@
         setTimeout(() => button.classList.remove("buttonClick"), 100);
       }
     }
+
+    e.target.blur();
   }
 
   function handleBackspace() {
