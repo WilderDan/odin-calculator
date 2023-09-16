@@ -137,6 +137,16 @@
   }
 
   function calculate() {
+    if (operation === divide && secondOperand === 0) {
+      display("Divide by 0!");
+      currentNumber = null;
+      firstOperand = null;
+      secondOperand = null;
+      operation = null;
+      shouldDigitAppend = false;
+      return;
+    }
+
     let solution = operate(operation, firstOperand, secondOperand);
     if (solution !== null) solution = round(solution, 8);
 
