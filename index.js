@@ -9,7 +9,6 @@
     let displayStr = "0";
 
     function handleDecimalAppend(str, max) {
-      console.log(str);
       if (str[0] === ".") return "0.";
 
       if (str[max - 1] === ".") return str.slice(0, max - 1);
@@ -60,7 +59,9 @@
   })();
 
   function handleKeyDown(e) {
-    let button = document.querySelector(`button[data-key="${e.key}"]`);
+    let key = e.key === "Enter" ? "=" : e.key;
+
+    let button = document.querySelector(`button[data-key="${key}"]`);
     if (button) button.click();
   }
 
