@@ -5,10 +5,19 @@
   let shouldDigitAppend = false;
 
   const display = (() => {
+    const MAX_CHARACTERS = 14;
     let displayStr = "0";
 
+    function handleOverflow(str, max) {
+      if (str.length < max) return str;
+      if (str[str.length - 1] === ".") return str.slice(0, max - 1);
+      return str.slice(0, max);
+    }
+
     return (value = "0", shouldAppend = false) => {
-      displayStr = shouldAppend ? displayStr + value : value;
+      let baseStr = shouldAppend ? displayStr + value : value.toString();
+      displayStr = handleOverflow(baseStr, MAX_CHARACTERS);
+
       document.getElementById("display").innerText = displayStr;
       return displayStr;
     };
