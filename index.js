@@ -8,15 +8,29 @@
     const MAX_CHARACTERS = 14;
     let displayStr = "0";
 
-    function handleOverflow(str, max) {
-      if (str.length < max) return str;
-      if (str[str.length - 1] === ".") return str.slice(0, max - 1);
-      return str.slice(0, max);
+    function handleDecimalAppend(str, max) {
+      console.log(str);
+      if (str[0] === ".") return "0.";
+
+      if (str[max - 1] === ".") return str.slice(0, max - 1);
+
+      // Ignore new decimal if existing one was already present
+      if (
+        str[str.length - 1] === "." &&
+        str.slice(0, str.length - 1).includes(".")
+      )
+        return str.slice(0, length - 1);
+
+      // No existing decimals
+      return str;
     }
 
     return (value = "0", shouldAppend = false) => {
       let baseStr = shouldAppend ? displayStr + value : value.toString();
-      displayStr = handleOverflow(baseStr, MAX_CHARACTERS);
+      displayStr = handleDecimalAppend(baseStr, MAX_CHARACTERS).slice(
+        0,
+        MAX_CHARACTERS
+      );
 
       document.getElementById("display").innerText = displayStr;
       return displayStr;
@@ -66,7 +80,6 @@
       }
     }
 
-    debugger;
     if (firstOperand === null) firstOperand = currentNumber;
     else {
       secondOperand = currentNumber;

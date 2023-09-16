@@ -88,5 +88,10 @@ button:hover {
 }
 
 .zero {
-  flex-basis: 75%;
+  flex-basis: 50%;
+}
+
+.decimal {
+  flex-basis: 25%;
+  background-color: lightgray;
 }
