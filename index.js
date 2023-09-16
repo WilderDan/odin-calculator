@@ -78,7 +78,11 @@
       handleBackspace();
     } else {
       let button = document.querySelector(`button[data-key="${key}"]`);
-      if (button) button.click();
+      if (button) {
+        button.classList.add("buttonClick");
+        button.click();
+        setTimeout(() => button.classList.remove("buttonClick"), 100);
+      }
     }
   }
 
