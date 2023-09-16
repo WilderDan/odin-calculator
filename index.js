@@ -32,7 +32,14 @@
     document
       .getElementById("equal")
       .addEventListener("click", handleEqualClick);
+
+    window.addEventListener("keydown", handleKeyDown);
   })();
+
+  function handleKeyDown(e) {
+    let button = document.querySelector(`button[data-key="${e.key}"]`);
+    if (button) button.click();
+  }
 
   function handleOperation(e) {
     function getOperationFromString(str) {
